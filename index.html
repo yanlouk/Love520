@@ -1,19 +1,15 @@
 <!--
-功能：520浪漫3D倾斜漂浮网页（左边贴近视角版）
-用途：微信扫码后打开
+功能：520浪漫3D空间穿透隧道版
+效果：文字穿越屏幕 + 深度空间漂浮
 -->
 
 <!DOCTYPE html>
 <html lang="zh">
-
 <head>
-
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-<title>Love</title>
+<title>Love Space</title>
 
 <style>
 
@@ -24,98 +20,93 @@ content="width=device-width, initial-scale=1.0">
 }
 
 body{
-
+    height:100vh;
     overflow:hidden;
 
-    height:100vh;
-
     background:
-    radial-gradient(circle at center,
-    #4b0055 0%,
-    #220022 45%,
-    #120018 100%);
+        radial-gradient(circle at center,
+        #4b0055 0%,
+        #1a001f 50%,
+        #0b0010 100%);
 
-    font-family:
-    "PingFang SC",
-    "Microsoft YaHei",
-    sans-serif;
+    perspective:1400px;
+    -webkit-perspective:1400px;
 
-    perspective:1800px;
+    font-family:"PingFang SC","Microsoft YaHei",sans-serif;
 }
 
 /* =========================
-   3D空间容器
+   容器（空间镜头）
 ========================= */
 
 .container{
-
     position:relative;
-
     width:100%;
     height:100%;
-
     overflow:hidden;
 
     transform-style:preserve-3d;
+    -webkit-transform-style:preserve-3d;
 
-    /* 左边贴近视角 */
-    transform:
-        rotateY(35deg);
+    transform: rotateY(25deg) translateX(-8%);
+    -webkit-transform: rotateY(25deg) translateX(-8%);
+
+    animation: breathe 6s ease-in-out infinite;
+}
+
+/* 镜头呼吸 */
+@keyframes breathe {
+    0%   { transform: rotateY(25deg) translateX(-8%); }
+    50%  { transform: rotateY(30deg) translateX(-6%); }
+    100% { transform: rotateY(25deg) translateX(-8%); }
 }
 
 /* =========================
-   漂浮文字
+   漂浮文字（空间穿透）
 ========================= */
 
 .word{
-
     position:absolute;
-
     white-space:nowrap;
-
     font-weight:bold;
 
-    color:#ff8de9;
+    color:#ff7ad9;
+
+    text-shadow:
+        0 0 6px #ff4fd8,
+        0 0 18px #ff4fd8,
+        0 0 40px #ff2fcf;
 
     opacity:0;
 
-    text-shadow:
-        0 0 5px #ff4fd8,
-        0 0 15px #ff4fd8,
-        0 0 30px #ff4fd8,
-        0 0 60px #ff4fd8,
-        0 0 120px #ff4fd8;
+    animation:flyThrough linear forwards;
 
-    animation:float3d linear infinite;
+    will-change: transform, opacity;
 }
 
-/* =========================
-   3D漂浮动画
-========================= */
-
-@keyframes float3d{
+/* 空间穿透动画 */
+@keyframes flyThrough {
 
     0%{
-
         transform:
-            translate3d(0,120vh,-900px)
-            rotateY(0deg)
-            scale(0.3);
-
+            translate3d(0,120vh,-1200px)
+            scale(0.2);
         opacity:0;
+        filter:blur(4px);
     }
 
-    10%{
+    15%{
         opacity:1;
     }
 
+    60%{
+        filter:blur(0px);
+    }
+
     100%{
-
         transform:
-            translate3d(-260px,-120vh,900px)
-            rotateY(-45deg)
-            scale(1.8);
-
+            translate3d(-120px,-140vh,800px)
+            scale(2.2);
         opacity:0;
     }
 }
@@ -125,139 +116,59 @@ body{
 ========================= */
 
 .heart{
-
     position:absolute;
-
     color:pink;
-
-    opacity:0.45;
-
+    opacity:0.5;
     filter:blur(1px);
 
-    animation:heartFloat linear infinite;
+    animation:heartFly linear infinite;
 }
 
-@keyframes heartFloat{
-
+@keyframes heartFly{
     0%{
-
-        transform:
-            translate3d(0,100vh,-500px)
-            scale(0.4);
-
+        transform:translate3d(0,100vh,-600px) scale(0.3);
         opacity:0;
     }
-
-    20%{
-        opacity:0.8;
-    }
-
+    20%{ opacity:0.8; }
     100%{
-
-        transform:
-            translate3d(-220px,-120vh,500px)
-            scale(1.8);
-
+        transform:translate3d(-200px,-120vh,600px) scale(2);
         opacity:0;
     }
 }
 
 /* =========================
-   星空背景
+   星星
 ========================= */
 
 .star{
-
     position:absolute;
-
     width:2px;
     height:2px;
-
     background:white;
-
     border-radius:50%;
-
-    opacity:0.7;
+    opacity:0.6;
 
     animation:twinkle infinite;
 }
 
 @keyframes twinkle{
-
-    0%{
-        opacity:0.2;
-    }
-
-    50%{
-        opacity:1;
-    }
-
-    100%{
-        opacity:0.2;
-    }
-}
-
-/* =========================
-   粉色迷雾
-========================= */
-
-.fog{
-
-    position:absolute;
-
-    width:700px;
-    height:700px;
-
-    background:
-    radial-gradient(circle,
-    rgba(255,80,220,0.18),
-    transparent 70%);
-
-    border-radius:50%;
-
-    filter:blur(70px);
-
-    animation:fogMove 18s ease-in-out infinite;
-}
-
-@keyframes fogMove{
-
-    0%{
-        transform:
-        translate(-10%,-10%);
-    }
-
-    50%{
-        transform:
-        translate(10%,10%);
-    }
-
-    100%{
-        transform:
-        translate(-10%,-10%);
-    }
+    0%{opacity:0.2;}
+    50%{opacity:1;}
+    100%{opacity:0.2;}
 }
 
 </style>
-
 </head>
 
 <body>
 
-<div class="container" id="container">
-
-    <div class="fog"></div>
-
-</div>
+<div class="container" id="container"></div>
 
 <script>
 
-/* =========================
-   漂浮文字内容
-========================= */
+const container = document.getElementById("container");
 
 const texts = [
-
     "我喜欢你",
     "爱你",
     "520快乐",
@@ -266,138 +177,93 @@ const texts = [
     "遇见你很高兴",
     "莹莹天天开心",
     "莹莹长命百岁"
-
 ];
 
-const container =
-document.getElementById("container");
 
-/* =========================
-   创建漂浮文字
-========================= */
+// =========================
+// 空间文字生成
+// =========================
 
 function createWord(){
 
-    const div =
-    document.createElement("div");
-
+    const div = document.createElement("div");
     div.className = "word";
 
     div.innerText =
-        texts[Math.floor(
-        Math.random()*texts.length)];
+        texts[Math.floor(Math.random() * texts.length)];
 
-    /* 初始位置 */
+    // 空间位置
+    const x = Math.random() * 120 - 10;
+    const y = Math.random() * 120 - 10;
+    const z = Math.random() * 2000 - 1000;
 
-    div.style.left =
-        Math.random()*140 - 20 + "vw";
+    div.style.left = x + "vw";
+    div.style.top = y + "vh";
 
-    div.style.top =
-        Math.random()*140 - 20 + "vh";
+    // 动画时间（远近速度不同）
+    const speed = (z < 0 ? 1.3 : 0.8);
+    const duration = (6 + Math.random() * 6) * speed;
 
-    /* 字体大小 */
+    div.style.animationDuration = duration + "s";
 
-    div.style.fontSize =
-        18 + Math.random()*60 + "px";
+    // 初始深度
+    div.style.transform = `translateZ(${z}px)`;
 
-    /* 动画时间 */
-
-    div.style.animationDuration =
-        8 + Math.random()*14 + "s";
-
-    /* 随机空间深度 */
-
-    const z =
-    Math.random()*1800 - 900;
-
-    div.style.transform =
-        `translateZ(${z}px)`;
-
-    /* 景深模糊 */
-
-    const blur =
-    Math.abs(z)/500;
-
-    div.style.filter =
-        `blur(${blur}px)`;
+    // 模糊（距离感）
+    const blur = Math.abs(z) / 600;
+    div.style.filter = `blur(${blur}px)`;
 
     container.appendChild(div);
 
-    setTimeout(()=>{
-
-        div.remove();
-
-    },22000);
+    setTimeout(()=>div.remove(), duration * 1000);
 }
 
-setInterval(createWord,180);
+setInterval(createWord, 160);
 
-/* =========================
-   创建爱心
-========================= */
+
+// =========================
+// 爱心
+// =========================
 
 function createHeart(){
 
-    const heart =
-    document.createElement("div");
-
+    const heart = document.createElement("div");
     heart.className = "heart";
-
     heart.innerHTML = "❤";
 
-    heart.style.left =
-        Math.random()*100 + "vw";
-
-    heart.style.fontSize =
-        20 + Math.random()*70 + "px";
-
-    heart.style.animationDuration =
-        6 + Math.random()*8 + "s";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = 20 + Math.random() * 60 + "px";
+    heart.style.animationDuration = 6 + Math.random() * 8 + "s";
 
     container.appendChild(heart);
 
-    setTimeout(()=>{
-
-        heart.remove();
-
-    },14000);
+    setTimeout(()=>heart.remove(), 14000);
 }
 
-setInterval(createHeart,500);
+setInterval(createHeart, 500);
 
-/* =========================
-   创建星空
-========================= */
+
+// =========================
+// 星星
+// =========================
 
 function createStar(){
 
-    const star =
-    document.createElement("div");
-
+    const star = document.createElement("div");
     star.className = "star";
 
-    star.style.left =
-        Math.random()*100 + "vw";
-
-    star.style.top =
-        Math.random()*100 + "vh";
-
-    star.style.animationDuration =
-        1 + Math.random()*5 + "s";
-
-    star.style.opacity =
-        0.2 + Math.random()*0.8;
+    star.style.left = Math.random() * 100 + "vw";
+    star.style.top = Math.random() * 100 + "vh";
+    star.style.animationDuration = 1 + Math.random() * 5 + "s";
 
     container.appendChild(star);
 }
 
 for(let i=0;i<160;i++){
-
     createStar();
 }
 
 </script>
 
 </body>
-
 </html>
