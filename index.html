@@ -1,0 +1,179 @@
+<!--
+功能：520浪漫漂浮文字网页
+用途：微信扫码后打开
+-->
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Love</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    overflow:hidden;
+    background:#120018;
+    height:100vh;
+    font-family:"KaiTi";
+}
+
+.container{
+    position:relative;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+}
+
+.word{
+    position:absolute;
+    color:#ff7be5;
+    font-size:32px;
+    text-shadow:
+        0 0 10px #ff4fd8,
+        0 0 20px #ff4fd8,
+        0 0 40px #ff4fd8;
+    animation:float linear infinite;
+    white-space:nowrap;
+    opacity:0.9;
+}
+
+@keyframes float{
+
+    0%{
+        transform:
+        translateY(120vh)
+        translateX(0px)
+        scale(0.8);
+
+        opacity:0;
+    }
+
+    10%{
+        opacity:1;
+    }
+
+    100%{
+        transform:
+        translateY(-120vh)
+        translateX(50px)
+        scale(1.2);
+
+        opacity:0;
+    }
+}
+
+.heart{
+    position:absolute;
+    color:pink;
+    font-size:40px;
+    animation:heartFloat 10s linear infinite;
+    opacity:0.6;
+}
+
+@keyframes heartFloat{
+
+    0%{
+        transform:translateY(100vh);
+        opacity:0;
+    }
+
+    20%{
+        opacity:0.8;
+    }
+
+    100%{
+        transform:translateY(-120vh);
+        opacity:0;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container" id="container"></div>
+
+<script>
+
+const texts = [
+
+    "我喜欢你",
+    "爱你",
+    "520快乐",
+    "I love you",
+    "和我在一起吧",
+    "遇见你很高兴",
+	"莹莹天天开心",
+	"莹莹长命百岁"
+
+];
+
+const container = document.getElementById("container");
+
+function createWord(){
+
+    const div = document.createElement("div");
+
+    div.className = "word";
+
+    div.innerText =
+        texts[Math.floor(Math.random()*texts.length)];
+
+    div.style.left =
+        Math.random()*100 + "vw";
+
+    div.style.top =
+        Math.random()*100 + "vh";
+
+    div.style.fontSize =
+        20 + Math.random()*40 + "px";
+
+    div.style.animationDuration =
+        8 + Math.random()*10 + "s";
+
+    container.appendChild(div);
+
+    setTimeout(()=>{
+        div.remove();
+    },18000);
+}
+
+setInterval(createWord,300);
+
+function createHeart(){
+
+    const heart = document.createElement("div");
+
+    heart.className = "heart";
+
+    heart.innerHTML = "❤";
+
+    heart.style.left =
+        Math.random()*100 + "vw";
+
+    heart.style.fontSize =
+        20 + Math.random()*50 + "px";
+
+    container.appendChild(heart);
+
+    setTimeout(()=>{
+        heart.remove();
+    },10000);
+}
+
+setInterval(createHeart,800);
+
+</script>
+
+</body>
+</html>
