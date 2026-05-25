@@ -1,6 +1,6 @@
 <!--
-功能：520浪漫3D空间穿透隧道版
-效果：文字穿越屏幕 + 深度空间漂浮
+功能：520浪漫3D倾斜穿透空间增强版
+效果：强倾斜 + 隧道穿透 + 斜向飞行
 -->
 
 <!DOCTYPE html>
@@ -9,7 +9,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Love Space</title>
+<title>Love Space Pro</title>
 
 <style>
 
@@ -29,14 +29,14 @@ body{
         #1a001f 50%,
         #0b0010 100%);
 
-    perspective:1400px;
-    -webkit-perspective:1400px;
+    perspective:1200px;
+    -webkit-perspective:1200px;
 
     font-family:"PingFang SC","Microsoft YaHei",sans-serif;
 }
 
 /* =========================
-   容器（空间镜头）
+   空间容器（强倾斜核心）
 ========================= */
 
 .container{
@@ -48,21 +48,15 @@ body{
     transform-style:preserve-3d;
     -webkit-transform-style:preserve-3d;
 
-    transform: rotateY(25deg) translateX(-8%);
-    -webkit-transform: rotateY(25deg) translateX(-8%);
-
-    animation: breathe 6s ease-in-out infinite;
-}
-
-/* 镜头呼吸 */
-@keyframes breathe {
-    0%   { transform: rotateY(25deg) translateX(-8%); }
-    50%  { transform: rotateY(30deg) translateX(-6%); }
-    100% { transform: rotateY(25deg) translateX(-8%); }
+    /* 🔥 强倾斜空间（关键升级） */
+    transform:
+        rotateY(48deg)
+        rotateX(26deg)
+        translateX(-12%);
 }
 
 /* =========================
-   漂浮文字（空间穿透）
+   漂浮文字
 ========================= */
 
 .word{
@@ -84,15 +78,22 @@ body{
     will-change: transform, opacity;
 }
 
-/* 空间穿透动画 */
+/* =========================
+   🚀 强倾斜穿透动画
+========================= */
+
 @keyframes flyThrough {
 
     0%{
         transform:
-            translate3d(0,120vh,-1200px)
+            perspective(1200px)
+            translate3d(120px,120vh,-1600px)
+            rotateX(45deg)
+            rotateY(-35deg)
             scale(0.2);
+
         opacity:0;
-        filter:blur(4px);
+        filter:blur(6px);
     }
 
     15%{
@@ -105,8 +106,12 @@ body{
 
     100%{
         transform:
-            translate3d(-120px,-140vh,800px)
-            scale(2.2);
+            perspective(1200px)
+            translate3d(-200px,-140vh,900px)
+            rotateX(12deg)
+            rotateY(30deg)
+            scale(2.5);
+
         opacity:0;
     }
 }
@@ -118,7 +123,7 @@ body{
 .heart{
     position:absolute;
     color:pink;
-    opacity:0.5;
+    opacity:0.55;
     filter:blur(1px);
 
     animation:heartFly linear infinite;
@@ -126,12 +131,12 @@ body{
 
 @keyframes heartFly{
     0%{
-        transform:translate3d(0,100vh,-600px) scale(0.3);
+        transform:translate3d(0,100vh,-800px) scale(0.3);
         opacity:0;
     }
-    20%{ opacity:0.8; }
+    20%{ opacity:0.85; }
     100%{
-        transform:translate3d(-200px,-120vh,600px) scale(2);
+        transform:translate3d(-240px,-120vh,700px) scale(2.2);
         opacity:0;
     }
 }
@@ -181,7 +186,7 @@ const texts = [
 
 
 // =========================
-// 空间文字生成
+// 斜向空间文字生成
 // =========================
 
 function createWord(){
@@ -192,25 +197,25 @@ function createWord(){
     div.innerText =
         texts[Math.floor(Math.random() * texts.length)];
 
-    // 空间位置
-    const x = Math.random() * 120 - 10;
-    const y = Math.random() * 120 - 10;
-    const z = Math.random() * 2000 - 1000;
+    // 🌌 空间位置（增强斜向）
+    const x = Math.random() * 140 - 20;
+    const y = Math.random() * 140 - 20;
+    const z = Math.random() * 2200 - 1100;
 
     div.style.left = x + "vw";
     div.style.top = y + "vh";
 
-    // 动画时间（远近速度不同）
-    const speed = (z < 0 ? 1.3 : 0.8);
-    const duration = (6 + Math.random() * 6) * speed;
+    // 🚀 动画时间（远慢近快）
+    const speedFactor = (z < 0 ? 1.4 : 0.75);
+    const duration = (6 + Math.random() * 6) * speedFactor;
 
     div.style.animationDuration = duration + "s";
 
-    // 初始深度
+    // 🎯 初始深度
     div.style.transform = `translateZ(${z}px)`;
 
-    // 模糊（距离感）
-    const blur = Math.abs(z) / 600;
+    // 🌫️ 景深模糊
+    const blur = Math.abs(z) / 550;
     div.style.filter = `blur(${blur}px)`;
 
     container.appendChild(div);
@@ -218,7 +223,7 @@ function createWord(){
     setTimeout(()=>div.remove(), duration * 1000);
 }
 
-setInterval(createWord, 160);
+setInterval(createWord, 140);
 
 
 // =========================
@@ -232,7 +237,7 @@ function createHeart(){
     heart.innerHTML = "❤";
 
     heart.style.left = Math.random() * 100 + "vw";
-    heart.style.fontSize = 20 + Math.random() * 60 + "px";
+    heart.style.fontSize = 18 + Math.random() * 70 + "px";
     heart.style.animationDuration = 6 + Math.random() * 8 + "s";
 
     container.appendChild(heart);
@@ -240,11 +245,11 @@ function createHeart(){
     setTimeout(()=>heart.remove(), 14000);
 }
 
-setInterval(createHeart, 500);
+setInterval(createHeart, 450);
 
 
 // =========================
-// 星星
+// 星星背景
 // =========================
 
 function createStar(){
@@ -259,7 +264,7 @@ function createStar(){
     container.appendChild(star);
 }
 
-for(let i=0;i<160;i++){
+for(let i=0;i<180;i++){
     createStar();
 }
 
